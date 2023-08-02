@@ -2,8 +2,9 @@ import Head from 'next/head';
 import Header from '../components/Header.js';
 import Banner from '../components/Banner.js';
 import SmallCard from '../components/SmallCard.js';
+import MediumCard from '../components/MediumCard.js';
 
-export default function Home({ exploreData }) {
+export default function Home({ exploreData, cardsData }) {
   return (
     <div className="">
       <Head>
@@ -33,6 +34,11 @@ export default function Home({ exploreData }) {
         </section>
         <section>
           <h2 className="text-4xl font-semibold py-8">Live Anywhere</h2>
+          <div className="flex space-x-3 overflow-scroll scrollbar-hide p-3 ml-3">
+            {cardsData?.map((item) => (
+              <MediumCard key={item.title} img={item.img} title={item.title} />
+            ))}
+          </div>
         </section>
       </main>
     </div>
@@ -41,23 +47,15 @@ export default function Home({ exploreData }) {
 
 // Static rendering;
 export async function getStaticProps() {
-  try {
-    // Bypass SSL certificate validation (temporary workaround, not recommended for production)
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    const response = await fetch('https://links.papareact.com/pyp');
-    const exploreData = await response.json();
+  // Bypass SSL certificate validation (temporary workaround, not recommended for production)
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  const exploreData = await fetch('https://links.papareact.com/pyp').then((res) => res.json());
+  const cardsData = await fetch('https://links.papareact.com/zp1').then((res) => res.json());
 
-    return {
-      props: {
-        exploreData,
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      props: {
-        exploreData: [],
-      },
-    };
-  }
+  return {
+    props: {
+      exploreData,
+      cardsData,
+    },
+  };
 }
