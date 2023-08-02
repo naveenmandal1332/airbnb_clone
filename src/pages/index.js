@@ -3,6 +3,7 @@ import Header from '../components/Header.js';
 import Banner from '../components/Banner.js';
 import SmallCard from '../components/SmallCard.js';
 import MediumCard from '../components/MediumCard.js';
+import LargeCard from '../components/LargeCard.js';
 
 export default function Home({ exploreData, cardsData }) {
   return (
@@ -40,6 +41,13 @@ export default function Home({ exploreData, cardsData }) {
             ))}
           </div>
         </section>
+
+        <LargeCard
+          img="https://links.papareact.com/4cj"
+          title="The Greatest Outdoor"
+          description="Wishlists curated by Airbnb."
+          buttonText="Get Inspired"
+        />
       </main>
     </div>
   );
